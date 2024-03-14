@@ -24,4 +24,4 @@ RUN python3 -m pip install --upgrade pip pytest cmake scikit-build setuptools fa
 RUN CMAKE_ARGS="-DLLAMA_CUBLAS=on" pip install llama-cpp-python
 
 # Run the server
-CMD python3 -m llama_cpp.server
+CMD python3 -m llama_cpp.server --config_file config-cuda.json
