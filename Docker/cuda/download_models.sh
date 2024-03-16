@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Docker volume name
-volume_name="my_volume"
+volume_name="llm_volume"
 
 # Check if the volume already exists
 if ! docker volume inspect "$volume_name" > /dev/null 2>&1; then

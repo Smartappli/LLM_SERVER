@@ -3,6 +3,7 @@ FROM nvidia/cuda:${CUDA_IMAGE}
 
 # We need to set the host to 0.0.0.0 to allow outside access
 ENV HOST 0.0.0.0
+ENV PORT 8008
 
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y git build-essential \
@@ -27,6 +28,8 @@ RUN CMAKE_ARGS="-DLLAMA_CUBLAS=on" pip install llama-cpp-python
 COPY download_models.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/download_models.sh
 RUN /usr/local/bin/download_models.sh
+
+EXPOSE 8008
 
 # Run the server
 CMD python3 -m llama_cpp.server --config_file config-cuda.json
