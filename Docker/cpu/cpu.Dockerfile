@@ -14,5 +14,10 @@ RUN CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" pip install llama_
 
 EXPOSE 8008
 
+# Copy and execute the script to download and save the models
+COPY download_models.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/download_models.sh
+RUN /usr/local/bin/download_models.sh
+
 # Run the server
 CMD python3 -m llama_cpp.server --config_file config-cpu.json
