@@ -27,28 +27,28 @@ fi
 # Function to download and save a model
 download_and_save_model() {
     local repository=$1
-    local model_alias=$2
+    local model_name=$2
     local file_name=$3
     local save_path=$4
 
-    echo "Downloading model $model_alias into $save_path..."
-    wget -O "$save_path/$model_alias.gguf" "$repository/$file_name"
+    echo "Downloading model $model_name into $save_path..."
+    wget -O "$save_path/$repository/$model_name/$file_name" "https://huggingface.co/$repository/$model_name/resolve/main/$file_name?download=true"
 
     if [ $? -eq 0 ]; then
-        echo "Model '$model_alias' downloaded successfully into '$save_path'."
+        echo "Model '$model_name' downloaded successfully into '$save_path'."
     else
-        echo "Error downloading model '$model_alias'."
+        echo "Error downloading model '$model_name'."
     fi
 }
 
 # Get models from the JSON file
-models_json=$(cat config-cpu.json)
-models=$(echo "$models_json" | jq -c '.models[]')
+models_json=$(cat config.json)
+models=$(jq -c '.models[]' <<< "$models_json")
 
 # Download and save each model into the Docker volume
 for model in $models; do
-    repository=$(echo "$model" | jq -r '.model | split("/") | .[1]')
-    model_alias=$(echo "$model" | jq -r '.model_alias')
-    file_name=$(echo "$model" | jq -r '.model | split("/") | .[2]')
-    download_and_save_model "$repository" "$model_alias" "$file_name" "$volume_path/models"
+    repository=$(jq -r '.model | split("/") | .[1]' <<< "$model")
+    model_name=$(jq -r '.model | split("/") | .[2]' <<< "$model")
+    file_name=$(jq -r '.model | split("/") | .[3]' <<< "$model")
+    download_and_save_model "$repository" "$model_name" "$file_name" "$volume_path/models"
 done

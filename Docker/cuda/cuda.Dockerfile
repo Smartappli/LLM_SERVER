@@ -24,11 +24,6 @@ RUN python3 -m pip install --upgrade pip pytest cmake scikit-build setuptools fa
 # Install llama-cpp-python (build with cuda)
 RUN CMAKE_ARGS="-DLLAMA_CUBLAS=on" pip install llama-cpp-python
 
-# Copy and execute the script to download and save the models
-COPY download_models.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/download_models.sh
-RUN /usr/local/bin/download_models.sh
-
 EXPOSE 8008
 
 # Run the server
