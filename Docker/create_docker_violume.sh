@@ -15,15 +15,6 @@ fi
 # Get the mount path of the volume
 volume_path=$(docker volume inspect --format='{{.Mountpoint}}' "$volume_name")
 
-# Check if the "models" directory exists in the volume
-if [ ! -d "$volume_path/models" ]; then
-    # "models" directory does not exist, create it
-    mkdir "$volume_path/models"
-    echo "Directory 'models' created in volume '$volume_name'."
-else
-    echo "Directory 'models' already exists in volume '$volume_name'."
-fi
-
 # Function to download and save a model
 download_and_save_model() {
     local repository=$1
@@ -32,7 +23,21 @@ download_and_save_model() {
     local save_path=$4
 
     echo "Downloading model $model_name into $save_path..."
-    wget -O "$save_path/$repository/$model_name/$file_name" "https://huggingface.co/$repository/$model_name/resolve/main/$file_name?download=true"
+
+    cd "$save_path"
+    if [ ! -d "$repository" ]; then
+        mkdir "$repository"
+    fi
+
+    cd "$repository"
+    if [ ! -d "$model_name" ]; then
+        mkdir "$model_name"
+    fi
+    cd "$model_name"
+
+    wget -N "https://huggingface.co/$repository/$model_name/resolve/main/$file_name"
+
+    cd ../../..
 
     if [ $? -eq 0 ]; then
         echo "Model '$model_name' downloaded successfully into '$save_path'."
@@ -50,5 +55,5 @@ for model in $models; do
     repository=$(jq -r '.model | split("/") | .[1]' <<< "$model")
     model_name=$(jq -r '.model | split("/") | .[2]' <<< "$model")
     file_name=$(jq -r '.model | split("/") | .[3]' <<< "$model")
-    download_and_save_model "$repository" "$model_name" "$file_name" "$volume_path/models"
+    download_and_save_model "$repository" "$model_name" "$file_name" "$volume_path"
 done
