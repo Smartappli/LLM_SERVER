@@ -33,6 +33,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
+          file: ./Docker/cpu/cpu.Dockerfile
           push: true
           tags: smartappli/llama-cpp-python-server-cpu:latest
 
@@ -54,5 +55,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
+          file: ./Docker/cuda/cuda.Dockerfile
           push: true
           tags: smartappli/llama-cpp-python-server-cuda:latest
