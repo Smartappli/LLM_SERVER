@@ -1,6 +1,6 @@
 Ubuntu 22.04
 
-'''
+```bash
 cd Docker
 sudo chmod +x create_docker_violume.sh
 sudo ./create_docker_violume.sh
@@ -17,4 +17,4 @@ docker run -v LLM_SERVER:/models smartappli/llama-cpp-python-server-cpu
 or
 
 docker run -v LLM_SERVER:/models smartappli/llama-cpp-python-server-cuda
-'''
+```
