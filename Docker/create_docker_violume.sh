@@ -24,15 +24,19 @@ download_and_save_model() {
 
     echo "Downloading model $model_name into $save_path..."
 
+    # shellcheck disable=SC2164
     cd "$save_path"
     if [ ! -d "$repository" ]; then
         mkdir "$repository"
     fi
 
+    # shellcheck disable=SC2164
     cd "$repository"
     if [ ! -d "$model_name" ]; then
         mkdir "$model_name"
     fi
+
+    # shellcheck disable=SC2164
     cd "$model_name"
 
     wget -N "https://huggingface.co/$repository/$model_name/resolve/main/$file_name"
@@ -47,7 +51,7 @@ download_and_save_model() {
 }
 
 # Get models from the JSON file
-models_json=$(cat config.json)
+models_json=$(cat cuda/config-cuda.json)
 models=$(jq -c '.models[]' <<< "$models_json")
 
 # Download and save each model into the Docker volume
