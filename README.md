@@ -4,7 +4,7 @@ Docker volume creation
 
 ```bash
 cd Docker
-sudo chmod +x create_docker_violume.sh
+sudo chmod +x create_docker_volume.sh
 sudo ./create_docker_volume.sh
 ```
 
