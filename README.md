@@ -5,7 +5,7 @@ Docker volume creation
 ```bash
 cd Docker
 sudo chmod +x create_docker_violume.sh
-sudo ./create_docker_violume.sh
+sudo ./create_docker_volume.sh
 ```
 
 Llama CPP Python Server - CPU with OpenBlast building
