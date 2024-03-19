@@ -8,16 +8,27 @@ sudo chmod +x create_docker_violume.sh
 sudo ./create_docker_violume.sh
 ```
 
-cd cpu
+Llama CPP Python Server - CPU with OpenBlast building
+```bash
+cd ./Docker/cpu
 docker build -t smartappli/llama-cpp-python-server-cpu:1.0 .
+```
 
-cd ..
-cd cuda
+Llama CPP Python Server - CUDA with OpenBlast building
+```bash
+cd ./Docker/cuda
 docker build -t smartappli/llama-cpp-python-server-cuda:1.0 .
+```
 
+Run Llama cpp python server CPU
+```bash
 docker run -v LLM_SERVER:/models smartappli/llama-cpp-python-server-cpu
+```
 
 or
 
+Run Llama cpp python server GPU
+```bash
 docker run -v LLM_SERVER:/models smartappli/llama-cpp-python-server-cuda
+```
 
