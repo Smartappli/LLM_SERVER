@@ -32,3 +32,8 @@ Run Llama cpp python server GPU
 docker run -v LLM_SERVER:/models smartappli/llama-cpp-python-server-cuda
 ```
 
+install dépendances
+```bash
+pip install -r requirements.txt
+```
+
