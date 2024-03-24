@@ -53,6 +53,36 @@
             "n_ctx": 2048
         },
         {
+            "model": "models/MaziyarPanahi/BioMedGPT-LM-7B-GGUF/BioMedGPT-LM-7B.Q2_K.gguf",
+            "model_alias": "biomedgpt-lm-7b_q2",
+            "chat_format": "chatml",
+            "n_gpu_layers": -1,
+            "offload_kqv": true,
+            "n_threads": 8,
+            "n_batch": 512,
+            "n_ctx": 2048
+        },
+        {
+            "model": "models/MaziyarPanahi/BioMedGPT-LM-7B-GGUF/BioMedGPT-LM-7B.Q4_K_M.gguf",
+            "model_alias": "biomedgpt-lm-7b_q4",
+            "chat_format": "chatml",
+            "n_gpu_layers": -1,
+            "offload_kqv": true,
+            "n_threads": 8,
+            "n_batch": 512,
+            "n_ctx": 2048
+        },
+        {
+            "model": "models/MaziyarPanahi/BioMedGPT-LM-7B-GGUF/BioMedGPT-LM-7B.Q8_0.gguf",
+            "model_alias": "biomedgpt-lm-7b_q8",
+            "chat_format": "chatml",
+            "n_gpu_layers": -1,
+            "offload_kqv": true,
+            "n_threads": 8,
+            "n_batch": 512,
+            "n_ctx": 2048
+        },
+        {
             "model": "models/BioMistral/BioMistral-7B-GGUF/ggml-model-Q8_0.gguf",
             "model_alias": "biomistral-7b_q8",
             "chat_format": "chatml",
