@@ -333,6 +333,36 @@
             "n_ctx": 2048
         },
         {
+            "model": "models/mradermacher/MedExpert-2x7b-GGUF/MedExpert-2x7b.Q2_K.gguf",
+            "model_alias": "medexpert-2x7b_q2",
+            "chat_format": "chatml",
+            "n_gpu_layers": -1,
+            "offload_kqv": true,
+            "n_threads": 8,
+            "n_batch": 512,
+            "n_ctx": 2048
+        },
+        {
+            "model": "models/mradermacher/MedExpert-2x7b-GGUF/MedExpert-2x7b.Q4_K_M.gguf",
+            "model_alias": "medexpert-2x7b_q4",
+            "chat_format": "chatml",
+            "n_gpu_layers": -1,
+            "offload_kqv": true,
+            "n_threads": 8,
+            "n_batch": 512,
+            "n_ctx": 2048
+        },
+        {
+            "model": "models/mradermacher/MedExpert-2x7b-GGUF/MedExpert-2x7b.Q8_0.gguf",
+            "model_alias": "medexpert-2x7b_q8",
+            "chat_format": "chatml",
+            "n_gpu_layers": -1,
+            "offload_kqv": true,
+            "n_threads": 8,
+            "n_batch": 512,
+            "n_ctx": 2048
+        },
+        {
             "model": "models/TheBloke/medicine-LLM-GGUF/medicine-llm.Q2_K.gguf",
             "model_alias": "medicine-llm_q2",
             "chat_format": "chatml",
