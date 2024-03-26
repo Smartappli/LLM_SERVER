@@ -1,4 +1,15 @@
-Ubuntu 22.04
+# Windows
+
+Install Docker Desktop
+Install jq and curl
+
+
+```bash
+create_docker_volume.bat
+```
+
+# Ubuntu 22.04
+
 
 Docker volume creation
 
