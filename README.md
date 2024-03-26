@@ -12,6 +12,9 @@ Install gît
 gît clone 
 ```
 
+```bash
+cd LLM_SERVER
+```
 
 ```bash
 create_docker_volume.bat
