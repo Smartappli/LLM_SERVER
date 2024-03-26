@@ -16,7 +16,11 @@ gît clone
 cd LLM_SERVER
 ```
 
+
+Docker volume creation
+
 ```bash
+cd Docker
 create_docker_volume.bat
 ```
 
