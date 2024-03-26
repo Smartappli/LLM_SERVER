@@ -2,7 +2,15 @@
 
 Install Docker Desktop 
 
-Install jq and curl
+Install jq 
+
+Install curl
+
+Install gît
+
+```bash
+gît clone 
+```
 
 
 ```bash
