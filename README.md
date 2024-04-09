@@ -65,6 +65,11 @@ install dépendances
 pip install -r requirements.txt
 ```
 
+Launch tests
+```bash
+cd ..
+python main.py
+```
 
 
 # Ubuntu 22.04
@@ -75,9 +80,14 @@ apt install update
 apt install wget jq git 
 ```
 
+Clone the repository
+```bash
+gît clone https://github.com/Smartappli/LLM_SERVER.git
+```
 
 Docker volume creation
 ```bash
+cd LLM_SERVER
 cd Docker
 sudo chmod +x create_docker_volume.sh
 sudo ./create_docker_volume.sh
@@ -85,13 +95,14 @@ sudo ./create_docker_volume.sh
 
 Build Docker image for Llama CPP Python Server - CPU with OpenBlast
 ```bash
-cd ./Docker/cpu
+cd cpu
 docker build -t smartappli/llama-cpp-python-server-cpu:1.0 .
 ```
 
 Build Docker image for Llama CPP Python Server - CUDA with OpenBlast
 ```bash
-cd ./Docker/cuda
+cd ..
+cd cuda
 docker build -t smartappli/llama-cpp-python-server-cuda:1.0 .
 ```
 
@@ -112,3 +123,8 @@ install dépendances
 pip install -r requirements.txt
 ```
 
+Launch tests
+```bash
+cd ..
+python main.py
+```
