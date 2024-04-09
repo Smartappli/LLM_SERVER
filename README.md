@@ -9,7 +9,7 @@ Install curl
 Install gît
 
 ```bash
-gît clone 
+gît clone https://github.com/Smartappli/LLM_SERVER.git
 ```
 
 ```bash
