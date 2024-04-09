@@ -2,11 +2,22 @@
 
 Install [Docker Desktop](https://www.docker.com/get-started/) 
 
-Install jq 
+Install [Chocolatey](https://chocolatey.org/)
+
+Install jq
+```bash
+choco install jq -y
+```
 
 Install curl
+```bash
+choco install curl -y
+```
 
 Install gît
+```bash
+Choco install git -y
+```
 
 ```bash
 gît clone https://github.com/Smartappli/LLM_SERVER.git
