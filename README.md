@@ -1,8 +1,11 @@
 # Windows
 
-Install [Docker Desktop](https://www.docker.com/get-started/) 
+Install [Docker Desktop](https://www.docker.com/get-started/)
 
-Install [Chocolatey](https://chocolatey.org/)
+Install [Chocolatey](https://chocolatey.org/install)
+
+Open a command prompt
+Ctrl + R
 
 Install jq
 ```bash
