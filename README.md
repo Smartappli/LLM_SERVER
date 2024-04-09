@@ -48,6 +48,24 @@ cd cuda
 docker build -t smartappli/llama-cpp-python-server-cuda:1.0 .
 ```
 
+Run Llama cpp python server CPU
+```bash
+docker run -v LLM_SERVER:/models smartappli/llama-cpp-python-server-cpu
+```
+
+or
+
+Run Llama cpp python server GPU
+```bash
+docker run -v LLM_SERVER:/models smartappli/llama-cpp-python-server-cuda
+```
+
+install dépendances
+```bash
+pip install -r requirements.txt
+```
+
+
 
 # Ubuntu 22.04
 
