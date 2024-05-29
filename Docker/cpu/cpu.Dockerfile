@@ -14,6 +14,9 @@ RUN useradd -m myuser
 # Change to the non-root user
 USER myuser
 
+# Add .local/bin to PATH
+ENV PATH="/home/myuser/.local/bin:${PATH}"
+
 # Copy the application code
 COPY --chown=myuser:myuser . .
 
