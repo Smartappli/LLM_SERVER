@@ -5,7 +5,8 @@ ENV HOST 0.0.0.0
 ENV PORT 8008
 
 # Install necessary packages
-RUN apt update && apt install -y libopenblas-dev ninja-build build-essential pkg-config && apt-get clean \
+RUN apt update && apt install -y --no-install-recommends git libopenblas-dev ninja-build build-essential pkg-config \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user
