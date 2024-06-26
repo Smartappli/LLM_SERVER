@@ -33,10 +33,10 @@ ENV CUDA_DOCKER_ARCH=all
 ENV LLAMA_CUBLAS=1
 
 # Install Python dependencies
-RUN python3 -m pip install --upgrade pip \
-    && pip install pytest==8.2.1 cmake==3.29.3 \
+RUN python3 -m pip install --upgrade pip==24.4.1 \
+    && pip install pytest==8.2.2 cmake==3.29.3 \
     scikit-build==0.17.6 setuptools==70.0.0 \
-    fastapi==0.111.0 uvicorn==0.30.0 \
+    fastapi==0.111.0 uvicorn==0.30.1 \
     sse-starlette==2.1.0 pydantic-settings==2.2.1 \
     starlette-context==0.3.6
 
