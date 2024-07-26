@@ -1,8 +1,8 @@
 FROM python:3-slim-bullseye
 
 # We need to set the host to 0.0.0.0 to allow outside access
-ENV HOST 0.0.0.0
-ENV PORT 8008
+ENV HOST=0.0.0.0
+ENV PORT=8008
 
 # Install necessary packages
 RUN apt update && apt install -y --no-install-recommends git libopenblas-dev ninja-build build-essential pkg-config \
@@ -22,10 +22,10 @@ ENV PATH="/home/myuser/.local/bin:${PATH}"
 COPY --chown=myuser:myuser . .
 
 # Install Python dependencies
-RUN python -m pip install --upgrade pip==24.4.1 \
-    && pip install pytest==8.2.2 cmake==3.23.3 \
-    scikit-build==0.17.6 setuptools==70.0.0 \
-    fastapi==0.111.0 uvicorn==0.30.1 \
+RUN python -m pip install --upgrade pip \
+    && pip install pytest==8.2.1 cmake==3.23.3 \
+    scikit-build==0.17.6 setuptools==71.1.0 \
+    fastapi==0.111.1 uvicorn==0.30.3 \
     sse-starlette==2.1.0 pydantic-settings==2.2.1 \
     starlette-context==0.3.6
 
@@ -36,4 +36,4 @@ RUN CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" pip install llama_
 EXPOSE 8008
 
 # Run the server
-CMD python3 -m llama_cpp.server --config_file config-cpu.json
+CMD ["python3", "-m", "llama_cpp.server", "--config_file", "config-cpu.json"]
