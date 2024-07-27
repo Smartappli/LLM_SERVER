@@ -29,7 +29,7 @@ ENV PATH="/home/myuser/.local/bin:${PATH}"
 
 # Set build-related environment variables
 ENV CUDA_DOCKER_ARCH=all
-ENV LLAMA_CUBLAS=1
+ENV GGML_CUDA=1
 
 # Install dependencies
 RUN python3 -m pip install --upgrade pip pytest cmake scikit-build setuptools fastapi uvicorn sse-starlette pydantic-settings starlette-context
