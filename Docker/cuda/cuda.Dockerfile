@@ -1,5 +1,5 @@
 ARG CUDA_VERSION="12.6.1"
-ARG OS="ubuntu22.04"
+ARG OS="ubuntu24.04"
 
 ARG CUDA_BUILDER_IMAGE="${CUDA_VERSION}-devel-${OS}"
 ARG CUDA_RUNTIME_IMAGE="${CUDA_VERSION}-runtime-${OS}"
@@ -23,7 +23,7 @@ ENV CUDA_DOCKER_ARCH=all
 ENV GGML_CUDA=1
 
 # Install depencencies
-RUN python -m pip install --upgrade pip
+# RUN python -m pip install --upgrade pip
 RUN python -m venv venv
 RUN venv/bin/pip install pytest cmake scikit-build setuptools fastapi uvicorn sse-starlette pydantic-settings starlette-context
 
