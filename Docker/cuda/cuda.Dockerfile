@@ -7,7 +7,7 @@ FROM nvidia/cuda:${CUDA_BUILDER_IMAGE} as builder
 
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends git build-essential \
-    python3 python3-pip python3-venv gcc wget \
+    python python-pip python-venv gcc wget \
     ocl-icd-opencl-dev opencl-headers clinfo \
     libclblast-dev libopenblas-dev \
     && apt-get clean \
