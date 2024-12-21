@@ -1,12 +1,12 @@
 ARG CUDA_VERSION="12.6.1"
-ARG OS="ubuntu24.04"
+ARG OS="ubuntu22.04"
 
 ARG CUDA_BUILDER_IMAGE="${CUDA_VERSION}-devel-${OS}"
 ARG CUDA_RUNTIME_IMAGE="${CUDA_VERSION}-runtime-${OS}"
 FROM nvidia/cuda:${CUDA_BUILDER_IMAGE} as builder
 
 RUN apt-get update && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends git build-essential \
+    && apt-get install -y --no-install-recommends git build-essential 2
     python3 python3-pip python3-venv gcc wget \
     ocl-icd-opencl-dev opencl-headers clinfo \
     libclblast-dev libopenblas-dev \
