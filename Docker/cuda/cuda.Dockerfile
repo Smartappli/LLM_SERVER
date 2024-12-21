@@ -1,8 +1,8 @@
 ARG CUDA_VERSION="12.6.3"
 ARG OS="ubuntu24.04"
 
-ARG CUDA_BUILDER_IMAGE="${CUDA_VERSION}-cudnn-devel-${OS}"
-ARG CUDA_RUNTIME_IMAGE="${CUDA_VERSION}-cudnn-runtime-${OS}"
+ARG CUDA_BUILDER_IMAGE="${CUDA_VERSION}-devel-${OS}"
+ARG CUDA_RUNTIME_IMAGE="${CUDA_VERSION}-runtime-${OS}"
 FROM nvidia/cuda:${CUDA_BUILDER_IMAGE} as builder
 
 RUN apt-get update && apt-get upgrade -y \
