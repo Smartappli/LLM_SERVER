@@ -32,17 +32,17 @@ ENV CUDA_DOCKER_ARCH=all \
     CMAKE_ARGS="-DGGML_CUDA=on"
 
 # Installer les deps Python générales
-RUN python3 -m pip install --upgrade --no-cache-dir pip wheel && \
-    pip install --no-cache-dir \
+RUN python3 -m venv /opt/venv && \
+    /opt/venv/bin/pip install --upgrade --no-cache-dir pip wheel && \
+    /opt/venv/bin/pip install --no-cache-dir \
         pytest scikit-build setuptools \
         fastapi uvicorn sse-starlette \
         pydantic-settings starlette-context
 
+ENV PATH="/opt/venv/bin:${PATH}"
+
 # Installer llama-cpp-python avec CUDA
-# (tu peux fixer une version si besoin, ex: ==0.3.2)
-RUN pip install --no-cache-dir \
-        "llama-cpp-python" \
-        --verbose
+RUN pip install --no-cache-dir "llama-cpp-python" --verbose
 
 EXPOSE 8000
 
