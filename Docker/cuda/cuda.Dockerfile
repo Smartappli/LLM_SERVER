@@ -8,11 +8,12 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 WORKDIR /app
 
+# Dépendances système pour Python + build C/C++ + OpenCL/BLAS
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
         python3 python3-pip python3-dev \
-        python3.12-venv \  # <<< IMPORTANT
+        python3-venv python3.12-venv \
         git build-essential \
         cmake ninja-build \
         gcc g++ wget \
@@ -22,14 +23,14 @@ RUN apt-get update && \
     echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd && \
     rm -rf /var/lib/apt/lists/*
 
-# Création du venv (maintenant possible)
+# Création du venv (PEP 668 friendly)
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:${PATH}"
 
 # Copie du projet
 COPY . .
 
-# Vars pour la build CUDA
+# Vars pour la build CUDA de llama-cpp-python
 ENV CUDA_DOCKER_ARCH=all \
     GGML_CUDA=1 \
     FORCE_CMAKE=1 \
