@@ -72,7 +72,7 @@ python main.py
 ```
 
 
-# Ubuntu 22.04
+# Ubuntu 24.04
 
 Install Wget, jq, and git
 ```bash
