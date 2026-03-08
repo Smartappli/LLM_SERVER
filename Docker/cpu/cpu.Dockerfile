@@ -25,7 +25,7 @@ COPY --chown=myuser:myuser . .
 RUN python -m pip install --upgrade pip \
     && pip install pytest==8.2.1 cmake==3.23.3 \
     scikit-build==0.18.1 setuptools==80.9.0 \
-    fastapi==0.121.0 uvicorn==0.38.0 \
+    fastapi==0.135.1 uvicorn==0.41.0 \
     sse-starlette==3.0.3 pydantic-settings==2.11.0 \
     starlette-context==0.4.0
 
