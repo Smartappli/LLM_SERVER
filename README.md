@@ -1,37 +1,41 @@
 # LLM_SERVER
 
-Serveur **llama-cpp-python** empaqueté en Docker avec deux variantes :
-- **CPU** (OpenBLAS)
-- **GPU** (CUDA)
-- **XPU** (Intel SYCL, expérimental)
-- **ROCm** (AMD GPU, expérimental)
-- **Vulkan** (multi-vendeur GPU, expérimental)
-- **OpenCL** (multi-vendeur GPU, expérimental)
+A production-ready **llama-cpp-python** server packaged with Docker images for multiple compute backends:
 
-Le projet fournit :
-- des images Docker prêtes à l’emploi ;
-- des configurations multi-modèles (`config-cpu.json`, `config-cuda.json`, `config-xpu.json`, `config-rocm.json`, `config-vulkan.json`, `config-opencl.json`) ;
-- un test de validation de structure des fichiers de config.
+- **CPU** (OpenBLAS)
+- **CUDA** (NVIDIA GPU)
+- **XPU** (Intel SYCL, experimental)
+- **ROCm** (AMD GPU, experimental)
+- **Vulkan** (cross-vendor GPU, experimental)
+- **OpenCL** (cross-vendor GPU, experimental)
+
+This repository includes:
+
+- prebuilt-oriented Dockerfiles for each backend;
+- multi-model runtime configurations (`config-cpu.json`, `config-cuda.json`, `config-xpu.json`, `config-rocm.json`, `config-vulkan.json`, `config-opencl.json`);
+- a configuration-structure validation test suite.
 
 ---
 
-## 1) Prérequis
+## 1) Prerequisites
 
-### Outils communs
-- [Docker Desktop](https://www.docker.com/get-started/) (Windows/macOS) ou Docker Engine (Linux)
+### Common tools
+
+- [Docker Desktop](https://www.docker.com/get-started/) (Windows/macOS) or Docker Engine (Linux)
 - Git
-- Python 3.10+ (pour lancer les tests locaux)
+- Python 3.10+ (for local tests)
 
-### Spécifique Windows
+### Windows-specific
+
 - [Chocolatey](https://chocolatey.org/install)
 
-Installation rapide (PowerShell/CMD administrateur) :
+Quick install (PowerShell/CMD as Administrator):
 
 ```bash
 choco install git jq curl -y
 ```
 
-### Spécifique Ubuntu 24.04+
+### Ubuntu 24.04+
 
 ```bash
 sudo apt update
@@ -40,7 +44,7 @@ sudo apt install -y wget jq git
 
 ---
 
-## 2) Cloner le dépôt
+## 2) Clone the repository
 
 ```bash
 git clone https://github.com/Smartappli/LLM_SERVER.git
@@ -49,17 +53,19 @@ cd LLM_SERVER
 
 ---
 
-## 3) Créer le volume Docker des modèles
+## 3) Create the Docker volume for models
 
-Depuis le dossier `Docker/` :
+Run from the `Docker/` directory:
 
 ### Windows
+
 ```bash
 cd Docker
 create_docker_volume.bat
 ```
 
 ### Linux
+
 ```bash
 cd Docker
 chmod +x create_docker_volume.sh
@@ -68,41 +74,47 @@ chmod +x create_docker_volume.sh
 
 ---
 
-## 4) Construire les images Docker
+## 4) Build Docker images
 
-> Les commandes suivantes sont à exécuter depuis le dossier `Docker/`.
+> Run the following commands from the `Docker/` directory.
 
-### Image CPU
+### CPU image
+
 ```bash
 cd cpu
 docker build -t smartappli/llama-cpp-python-server-cpu:1.0 -f cpu.Dockerfile ..
 ```
 
-### Image CUDA (GPU)
+### CUDA image (NVIDIA GPU)
+
 ```bash
 cd ../cuda
 docker build -t smartappli/llama-cpp-python-server-cuda:1.0 -f cuda.Dockerfile ..
 ```
 
-### Image XPU (Intel, expérimental)
+### XPU image (Intel, experimental)
+
 ```bash
 cd ../xpu
 docker build -t smartappli/llama-cpp-python-server-xpu:1.0 -f xpu.Dockerfile ..
 ```
 
-### Image ROCm (AMD, expérimental)
+### ROCm image (AMD, experimental)
+
 ```bash
 cd ../rocm
 docker build -t smartappli/llama-cpp-python-server-rocm:1.0 -f rocm.Dockerfile ..
 ```
 
-### Image Vulkan (expérimental)
+### Vulkan image (experimental)
+
 ```bash
 cd ../vulkan
 docker build -t smartappli/llama-cpp-python-server-vulkan:1.0 -f vulkan.Dockerfile ..
 ```
 
-### Image OpenCL (expérimental)
+### OpenCL image (experimental)
+
 ```bash
 cd ../opencl
 docker build -t smartappli/llama-cpp-python-server-opencl:1.0 -f opencl.Dockerfile ..
@@ -110,68 +122,75 @@ docker build -t smartappli/llama-cpp-python-server-opencl:1.0 -f opencl.Dockerfi
 
 ---
 
-## 5) Lancer le serveur
+## 5) Run the server
 
-Les conteneurs montent le volume `LLM_SERVER` sur `/models`.
+All containers mount the `LLM_SERVER` Docker volume to `/models`.
 
-### Démarrage CPU
+### Start CPU
+
 ```bash
 docker run --rm -p 8008:8008 -v LLM_SERVER:/models smartappli/llama-cpp-python-server-cpu:1.0
 ```
 
-### Démarrage GPU
+### Start CUDA (NVIDIA GPU)
+
 ```bash
 docker run --rm --gpus all -p 8008:8008 -v LLM_SERVER:/models smartappli/llama-cpp-python-server-cuda:1.0
 ```
 
-### Démarrage XPU (Intel, expérimental)
+### Start XPU (Intel, experimental)
+
 ```bash
 docker run --rm -p 8008:8008 -v LLM_SERVER:/models smartappli/llama-cpp-python-server-xpu:1.0
 ```
 
-### Démarrage ROCm (AMD, expérimental)
+### Start ROCm (AMD, experimental)
+
 ```bash
 docker run --rm -p 8008:8008 -v LLM_SERVER:/models smartappli/llama-cpp-python-server-rocm:1.0
 ```
 
-### Démarrage Vulkan (expérimental)
+### Start Vulkan (experimental)
+
 ```bash
 docker run --rm -p 8008:8008 -v LLM_SERVER:/models smartappli/llama-cpp-python-server-vulkan:1.0
 ```
 
-### Démarrage OpenCL (expérimental)
+### Start OpenCL (experimental)
+
 ```bash
 docker run --rm -p 8008:8008 -v LLM_SERVER:/models smartappli/llama-cpp-python-server-opencl:1.0
 ```
 
-API compatible OpenAI disponible sur :
+OpenAI-compatible endpoint:
+
 - `http://localhost:8008/v1`
 
 ---
 
-## 6) Tester le projet
+## 6) Validate the project
 
-### 6.1 Test unitaire des fichiers de configuration
+### 6.1 Configuration unit tests
 
-Depuis la racine du dépôt :
+Run from repository root:
 
 ```bash
 python -m unittest -v tests/test_configs.py
 ```
 
-### 6.2 Test de requête (smoke test)
+### 6.2 Request smoke test
 
-Le script `Docker/main.py` envoie une requête au serveur local :
+`Docker/main.py` sends a request to the local server:
 
 ```bash
 python Docker/main.py
 ```
 
-> Assurez-vous qu’un serveur est déjà lancé sur `http://localhost:8008/v1`.
+> Ensure the server is already running at `http://localhost:8008/v1`.
 
 ---
 
-## 7) Dépendances Python locales
+## 7) Install local Python dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -179,31 +198,31 @@ pip install -r requirements.txt
 
 ---
 
-## 8) Dépannage rapide
+## 8) Troubleshooting
 
-- **Port occupé** : changez le mapping `-p 8008:8008` (ex. `-p 8010:8008`).
-- **GPU non détecté** : vérifiez Docker + NVIDIA Container Toolkit et testez `docker run --gpus all ...`.
-- **XPU Intel non détecté** : vérifiez les drivers Intel GPU sur l'hôte et l'accès aux devices dans Docker.
-- **ROCm non détecté** : vérifiez les drivers AMD ROCm sur l'hôte et les permissions devices (`/dev/kfd`, `/dev/dri`).
-- **Vulkan non détecté** : vérifiez la stack Vulkan de l'hôte (`vulkaninfo`) et l'accès aux devices GPU.
-- **OpenCL non détecté** : vérifiez le runtime OpenCL fournisseur et la visibilité via `clinfo`.
-- **Modèles introuvables** : vérifiez que le volume `LLM_SERVER` contient bien les modèles attendus.
+- **Port already in use**: update `-p 8008:8008` (for example `-p 8010:8008`).
+- **NVIDIA GPU not detected**: verify Docker setup + NVIDIA Container Toolkit, then test with `docker run --gpus all ...`.
+- **Intel XPU not detected**: verify Intel GPU drivers on host and device access in Docker.
+- **ROCm not detected**: verify AMD ROCm drivers on host and device permissions (`/dev/kfd`, `/dev/dri`).
+- **Vulkan not detected**: verify host Vulkan stack (`vulkaninfo`) and GPU device access.
+- **OpenCL not detected**: verify vendor OpenCL runtime and visibility using `clinfo`.
+- **Models not found**: verify the `LLM_SERVER` volume contains the expected model files.
 
 ---
 
-## 9) Arborescence utile
+## 9) Useful project structure
 
-- `Docker/cpu/cpu.Dockerfile` : image CPU
-- `Docker/cuda/cuda.Dockerfile` : image GPU
-- `Docker/cpu/config-cpu.json` : config modèles CPU
-- `Docker/cuda/config-cuda.json` : config modèles GPU
-- `Docker/xpu/xpu.Dockerfile` : image XPU Intel (expérimentale)
-- `Docker/xpu/config-xpu.json` : config modèles XPU
-- `Docker/rocm/rocm.Dockerfile` : image ROCm AMD (expérimentale)
-- `Docker/rocm/config-rocm.json` : config modèles ROCm
-- `Docker/vulkan/vulkan.Dockerfile` : image Vulkan (expérimentale)
-- `Docker/vulkan/config-vulkan.json` : config modèles Vulkan
-- `Docker/opencl/opencl.Dockerfile` : image OpenCL (expérimentale)
-- `Docker/opencl/config-opencl.json` : config modèles OpenCL
-- `tests/test_configs.py` : tests unitaires sur les configs
-- `Docker/main.py` : script de test de requête
+- `Docker/cpu/cpu.Dockerfile`: CPU image
+- `Docker/cuda/cuda.Dockerfile`: CUDA image
+- `Docker/cpu/config-cpu.json`: CPU multi-model configuration
+- `Docker/cuda/config-cuda.json`: CUDA multi-model configuration
+- `Docker/xpu/xpu.Dockerfile`: Intel XPU image (experimental)
+- `Docker/xpu/config-xpu.json`: XPU multi-model configuration
+- `Docker/rocm/rocm.Dockerfile`: AMD ROCm image (experimental)
+- `Docker/rocm/config-rocm.json`: ROCm multi-model configuration
+- `Docker/vulkan/vulkan.Dockerfile`: Vulkan image (experimental)
+- `Docker/vulkan/config-vulkan.json`: Vulkan multi-model configuration
+- `Docker/opencl/opencl.Dockerfile`: OpenCL image (experimental)
+- `Docker/opencl/config-opencl.json`: OpenCL multi-model configuration
+- `tests/test_configs.py`: configuration unit tests
+- `Docker/main.py`: request smoke-test script
