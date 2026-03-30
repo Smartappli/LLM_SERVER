@@ -25,12 +25,12 @@ COPY --chown=myuser:myuser . .
 RUN python -m pip install --upgrade pip \
     && pip install pytest==8.2.1 cmake==3.23.3 \
     scikit-build==0.18.1 setuptools==82.0.0 \
-    fastapi==0.135.1 uvicorn==0.41.0 \
+    fastapi==0.135.1 uvicorn==0.42.0 \
     sse-starlette==3.3.2  pydantic-settings==2.13.1 \
     starlette-context==0.5.1
 
 # Install llama-cpp-python (build with OpenBLAS)
-RUN CMAKE_ARGS="-DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS" pip install llama_cpp_python --verbose
+RUN CMAKE_ARGS="-DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS" pip install llama_cpp_python==0.3.19 --verbose
 
 # Expose the port
 EXPOSE 8008
