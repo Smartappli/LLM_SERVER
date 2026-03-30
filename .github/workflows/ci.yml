@@ -4,13 +4,34 @@ on:
   push:
     branches:
       - 'master'
+  pull_request:
 
 concurrency:
   group: ci-${{ github.event_name == 'pull_request' && format('{0}-{1}', github.workflow, github.event.pull_request.number) || github.workflow_ref }}
   cancel-in-progress: true
 
+
 jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run test suite
+        run: pytest -q
+
   docker-cpu:
+    needs: tests
     runs-on: ubuntu-latest
     steps:
       - name: Free Disk Space (Ubuntu)
@@ -59,6 +80,7 @@ jobs:
 
 
   docker-xpu:
+    needs: tests
     runs-on: ubuntu-latest
     steps:
       - name: Free Disk Space (Ubuntu)
@@ -93,6 +115,7 @@ jobs:
 
 
   docker-rocm:
+    needs: tests
     runs-on: ubuntu-latest
     steps:
       - name: Free Disk Space (Ubuntu)
@@ -127,6 +150,7 @@ jobs:
 
 
   docker-vulkan:
+    needs: tests
     runs-on: ubuntu-latest
     steps:
       - name: Free Disk Space (Ubuntu)
@@ -161,6 +185,7 @@ jobs:
 
 
   docker-opencl:
+    needs: tests
     runs-on: ubuntu-latest
     steps:
       - name: Free Disk Space (Ubuntu)
@@ -194,6 +219,7 @@ jobs:
           tags: smartappli/llama-cpp-python-server-opencl:latest
 
   docker-cuda:
+    needs: tests
     runs-on: ubuntu-latest
     steps:
       - name: Free Disk Space (Ubuntu)
