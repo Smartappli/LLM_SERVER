@@ -3,6 +3,7 @@
 Serveur **llama-cpp-python** empaqueté en Docker avec deux variantes :
 - **CPU** (OpenBLAS)
 - **GPU** (CUDA)
+- **XPU** (Intel SYCL, expérimental)
 
 Le projet fournit :
 - des images Docker prêtes à l’emploi ;
@@ -80,6 +81,12 @@ cd ../cuda
 docker build -t smartappli/llama-cpp-python-server-cuda:1.0 -f cuda.Dockerfile ..
 ```
 
+### Image XPU (Intel, expérimental)
+```bash
+cd ../xpu
+docker build -t smartappli/llama-cpp-python-server-xpu:1.0 -f xpu.Dockerfile ..
+```
+
 ---
 
 ## 5) Lancer le serveur
@@ -94,6 +101,11 @@ docker run --rm -p 8008:8008 -v LLM_SERVER:/models smartappli/llama-cpp-python-s
 ### Démarrage GPU
 ```bash
 docker run --rm --gpus all -p 8008:8008 -v LLM_SERVER:/models smartappli/llama-cpp-python-server-cuda:1.0
+```
+
+### Démarrage XPU (Intel, expérimental)
+```bash
+docker run --rm -p 8008:8008 -v LLM_SERVER:/models smartappli/llama-cpp-python-server-xpu:1.0
 ```
 
 API compatible OpenAI disponible sur :
@@ -135,6 +147,7 @@ pip install -r requirements.txt
 
 - **Port occupé** : changez le mapping `-p 8008:8008` (ex. `-p 8010:8008`).
 - **GPU non détecté** : vérifiez Docker + NVIDIA Container Toolkit et testez `docker run --gpus all ...`.
+- **XPU Intel non détecté** : vérifiez les drivers Intel GPU sur l'hôte et l'accès aux devices dans Docker.
 - **Modèles introuvables** : vérifiez que le volume `LLM_SERVER` contient bien les modèles attendus.
 
 ---
@@ -145,5 +158,7 @@ pip install -r requirements.txt
 - `Docker/cuda/cuda.Dockerfile` : image GPU
 - `Docker/cpu/config-cpu.json` : config modèles CPU
 - `Docker/cuda/config-cuda.json` : config modèles GPU
+- `Docker/xpu/xpu.Dockerfile` : image XPU Intel (expérimentale)
+- `Docker/xpu/config-xpu.json` : config modèles XPU
 - `tests/test_configs.py` : tests unitaires sur les configs
 - `Docker/main.py` : script de test de requête
