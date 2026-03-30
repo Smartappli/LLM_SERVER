@@ -33,6 +33,11 @@ jobs:
 
       - name: Generate coverage report
         run: |
+          test_count=$(find tests -type f -name 'test_*.py' | wc -l)
+          if [ "$test_count" -eq 0 ]; then
+            echo "No tests found matching tests/test_*.py. Cannot generate coverage.xml."
+            exit 1
+          fi
           uv run --with coverage coverage run -m unittest discover -s tests -p 'test_*.py'
           uv run --with coverage coverage xml -o coverage.xml
 
