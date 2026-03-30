@@ -27,6 +27,9 @@ class TestDockerConfigs(unittest.TestCase):
     def test_cuda_config_has_models(self):
         self._load_config("Docker/cuda/config-cuda.json")
 
+    def test_xpu_config_has_models(self):
+        self._load_config("Docker/xpu/config-xpu.json")
+
 
 if __name__ == "__main__":
     unittest.main()
