@@ -30,6 +30,15 @@ class TestDockerConfigs(unittest.TestCase):
     def test_xpu_config_has_models(self):
         self._load_config("Docker/xpu/config-xpu.json")
 
+    def test_rocm_config_has_models(self):
+        self._load_config("Docker/rocm/config-rocm.json")
+
+    def test_vulkan_config_has_models(self):
+        self._load_config("Docker/vulkan/config-vulkan.json")
+
+    def test_opencl_config_has_models(self):
+        self._load_config("Docker/opencl/config-opencl.json")
+
 
 if __name__ == "__main__":
     unittest.main()

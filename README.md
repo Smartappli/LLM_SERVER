@@ -4,10 +4,13 @@ Serveur **llama-cpp-python** empaqueté en Docker avec deux variantes :
 - **CPU** (OpenBLAS)
 - **GPU** (CUDA)
 - **XPU** (Intel SYCL, expérimental)
+- **ROCm** (AMD GPU, expérimental)
+- **Vulkan** (multi-vendeur GPU, expérimental)
+- **OpenCL** (multi-vendeur GPU, expérimental)
 
 Le projet fournit :
 - des images Docker prêtes à l’emploi ;
-- des configurations multi-modèles (`config-cpu.json`, `config-cuda.json`) ;
+- des configurations multi-modèles (`config-cpu.json`, `config-cuda.json`, `config-xpu.json`, `config-rocm.json`, `config-vulkan.json`, `config-opencl.json`) ;
 - un test de validation de structure des fichiers de config.
 
 ---
@@ -87,6 +90,24 @@ cd ../xpu
 docker build -t smartappli/llama-cpp-python-server-xpu:1.0 -f xpu.Dockerfile ..
 ```
 
+### Image ROCm (AMD, expérimental)
+```bash
+cd ../rocm
+docker build -t smartappli/llama-cpp-python-server-rocm:1.0 -f rocm.Dockerfile ..
+```
+
+### Image Vulkan (expérimental)
+```bash
+cd ../vulkan
+docker build -t smartappli/llama-cpp-python-server-vulkan:1.0 -f vulkan.Dockerfile ..
+```
+
+### Image OpenCL (expérimental)
+```bash
+cd ../opencl
+docker build -t smartappli/llama-cpp-python-server-opencl:1.0 -f opencl.Dockerfile ..
+```
+
 ---
 
 ## 5) Lancer le serveur
@@ -106,6 +127,21 @@ docker run --rm --gpus all -p 8008:8008 -v LLM_SERVER:/models smartappli/llama-c
 ### Démarrage XPU (Intel, expérimental)
 ```bash
 docker run --rm -p 8008:8008 -v LLM_SERVER:/models smartappli/llama-cpp-python-server-xpu:1.0
+```
+
+### Démarrage ROCm (AMD, expérimental)
+```bash
+docker run --rm -p 8008:8008 -v LLM_SERVER:/models smartappli/llama-cpp-python-server-rocm:1.0
+```
+
+### Démarrage Vulkan (expérimental)
+```bash
+docker run --rm -p 8008:8008 -v LLM_SERVER:/models smartappli/llama-cpp-python-server-vulkan:1.0
+```
+
+### Démarrage OpenCL (expérimental)
+```bash
+docker run --rm -p 8008:8008 -v LLM_SERVER:/models smartappli/llama-cpp-python-server-opencl:1.0
 ```
 
 API compatible OpenAI disponible sur :
@@ -148,6 +184,9 @@ pip install -r requirements.txt
 - **Port occupé** : changez le mapping `-p 8008:8008` (ex. `-p 8010:8008`).
 - **GPU non détecté** : vérifiez Docker + NVIDIA Container Toolkit et testez `docker run --gpus all ...`.
 - **XPU Intel non détecté** : vérifiez les drivers Intel GPU sur l'hôte et l'accès aux devices dans Docker.
+- **ROCm non détecté** : vérifiez les drivers AMD ROCm sur l'hôte et les permissions devices (`/dev/kfd`, `/dev/dri`).
+- **Vulkan non détecté** : vérifiez la stack Vulkan de l'hôte (`vulkaninfo`) et l'accès aux devices GPU.
+- **OpenCL non détecté** : vérifiez le runtime OpenCL fournisseur et la visibilité via `clinfo`.
 - **Modèles introuvables** : vérifiez que le volume `LLM_SERVER` contient bien les modèles attendus.
 
 ---
@@ -160,5 +199,11 @@ pip install -r requirements.txt
 - `Docker/cuda/config-cuda.json` : config modèles GPU
 - `Docker/xpu/xpu.Dockerfile` : image XPU Intel (expérimentale)
 - `Docker/xpu/config-xpu.json` : config modèles XPU
+- `Docker/rocm/rocm.Dockerfile` : image ROCm AMD (expérimentale)
+- `Docker/rocm/config-rocm.json` : config modèles ROCm
+- `Docker/vulkan/vulkan.Dockerfile` : image Vulkan (expérimentale)
+- `Docker/vulkan/config-vulkan.json` : config modèles Vulkan
+- `Docker/opencl/opencl.Dockerfile` : image OpenCL (expérimentale)
+- `Docker/opencl/config-opencl.json` : config modèles OpenCL
 - `tests/test_configs.py` : tests unitaires sur les configs
 - `Docker/main.py` : script de test de requête
