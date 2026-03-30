@@ -50,7 +50,17 @@ jobs:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
       - name: SonarQube scan
+        if: ${{ secrets.SONAR_TOKEN != '' && secrets.SONAR_PROJECT_KEY != '' && secrets.SONAR_ORGANIZATION != '' }}
         uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9
+        with:
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL || 'https://sonarcloud.io' }}
+
+      - name: SonarQube scan skipped
+        if: ${{ secrets.SONAR_TOKEN == '' || secrets.SONAR_PROJECT_KEY == '' || secrets.SONAR_ORGANIZATION == '' }}
+        run: |
+          echo "Skipping SonarQube scan because SONAR_TOKEN, SONAR_PROJECT_KEY, or SONAR_ORGANIZATION is not configured."
