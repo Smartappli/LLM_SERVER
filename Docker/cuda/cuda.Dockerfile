@@ -48,7 +48,7 @@ RUN pip install --upgrade --no-cache-dir pip wheel && \
 #    Tu peux ajuster CMAKE_CUDA_ARCHITECTURES à ton GPU (80 = A100, 86 = RTX 30xx, 89 = RTX 40xx, etc.)
 ENV GGML_CUDA=1
 ENV CMAKE_ARGS="-DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=90"
-RUN pip install --no-cache-dir --verbose llama-cpp-python==0.3.17
+RUN pip install --no-cache-dir --verbose llama-cpp-python==0.3.19
 
 # 7) Commande de lancement
 CMD ["python3", "-m", "llama_cpp.server", "--config_file", "config-cuda.json"]
