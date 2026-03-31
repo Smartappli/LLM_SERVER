@@ -1,5 +1,5 @@
-ARG ROCM_IMAGE="rocm/dev-ubuntu-24.04:6.4"
-FROM rocm/${ROCM_IMAGE}
+ARG ROCM_IMAGE="rocm/dev-ubuntu-24.04:6.4.4-complete"
+FROM ${ROCM_IMAGE}
 
 # Serveur exposé hors container
 ENV HOST=0.0.0.0
@@ -28,7 +28,7 @@ RUN pip install --upgrade --no-cache-dir pip wheel setuptools && \
 # Build llama-cpp-python avec backend HIP/ROCm
 ENV CMAKE_ARGS="-DGGML_HIP=ON"
 ENV GGML_HIP=1
-RUN pip install --no-cache-dir --verbose llama-cpp-python==0.3.19
+RUN pip install --no-cache-dir --verbose "llama-cpp-python>=0.3.19,<0.4"
 
 EXPOSE 8008
 CMD ["python3", "-m", "llama_cpp.server", "--config_file", "config-rocm.json"]

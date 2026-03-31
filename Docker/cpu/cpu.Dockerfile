@@ -30,7 +30,7 @@ RUN python -m pip install --upgrade pip \
     starlette-context==0.5.1
 
 # Install llama-cpp-python (build with OpenBLAS)
-RUN CMAKE_ARGS="-DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS" pip install llama_cpp_python==0.3.19 --verbose
+RUN CMAKE_ARGS="-DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS" pip install "llama-cpp-python>=0.3.19,<0.4" --verbose
 
 # Expose the port
 EXPOSE 8008
