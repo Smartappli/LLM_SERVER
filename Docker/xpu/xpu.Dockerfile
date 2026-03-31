@@ -1,4 +1,4 @@
-ARG ONEAPI_IMAGE="devel-ubuntu22.04"
+ARG ONEAPI_IMAGE="latest"
 FROM intel/oneapi-basekit:${ONEAPI_IMAGE}
 
 # Serveur exposé hors container

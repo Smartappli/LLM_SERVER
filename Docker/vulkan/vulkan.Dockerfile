@@ -8,7 +8,7 @@ RUN apt-get update && \
       python3 python3-venv python3-pip python3-dev \
       git build-essential cmake ninja-build pkg-config \
       libopenblas-dev \
-      vulkan-tools libvulkan-dev && \
+      vulkan-tools libvulkan-dev glslc && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
