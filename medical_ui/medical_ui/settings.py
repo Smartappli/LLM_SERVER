@@ -56,7 +56,6 @@ TEMPLATES = [
     }
 ]
 
-WSGI_APPLICATION = "medical_ui.wsgi.application"
 ASGI_APPLICATION = "medical_ui.asgi.application"
 
 DATABASES = {

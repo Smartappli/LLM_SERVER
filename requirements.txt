@@ -1,5 +1,5 @@
 coverage
 openai
 
-Django>=6.03,<6.1
-granian==2.72
+Django>=6.0.3,<6.1
+granian==2.7.2
