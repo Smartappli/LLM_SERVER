@@ -9,7 +9,8 @@ RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
       python3 python3-venv python3-pip python3-dev \
       git build-essential cmake ninja-build pkg-config \
-      libopenblas-dev && \
+      libopenblas-dev \
+      hipblas-dev rocblas-dev && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -26,7 +27,7 @@ RUN pip install --upgrade --no-cache-dir pip wheel setuptools && \
       pydantic-settings starlette-context
 
 # Build llama-cpp-python avec backend HIP/ROCm
-ENV CMAKE_ARGS="-DGGML_HIP=ON"
+ENV CMAKE_ARGS="-DGGML_HIP=ON -DCMAKE_PREFIX_PATH=/opt/rocm"
 ENV GGML_HIP=1
 RUN pip install --no-cache-dir --verbose "llama-cpp-python>=0.3.19,<0.4"
 
