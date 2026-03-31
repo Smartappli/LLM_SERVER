@@ -111,6 +111,8 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           file: ./Docker/xpu/xpu.Dockerfile
+          build-args: |
+            ONEAPI_IMAGE=2025.0.0-devel-ubuntu24.04
           push: ${{ github.event_name != 'pull_request' }}
           tags: smartappli/llama-cpp-python-server-xpu:latest
 
