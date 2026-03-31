@@ -226,3 +226,26 @@ pip install -r requirements.txt
 - `Docker/opencl/config-opencl.json`: OpenCL multi-model configuration
 - `tests/test_configs.py`: configuration unit tests
 - `Docker/main.py`: request smoke-test script
+
+
+## 10) Download medical Hugging Face models (GGUF / llama-cpp-python)
+
+A helper script is available to discover medical GGUF models from Hugging Face and optionally download them:
+
+```bash
+python Docker/download_medical_models.py --output-dir models
+```
+
+Download selected files (preferred quantization per model):
+
+```bash
+python Docker/download_medical_models.py --download --output-dir models
+```
+
+Download **all** GGUF files for each discovered medical model:
+
+```bash
+python Docker/download_medical_models.py --download --all-files --output-dir models
+```
+
+> You can pass a Hugging Face token with `--token <HF_TOKEN>` or the `HF_TOKEN` environment variable for gated/private models.
