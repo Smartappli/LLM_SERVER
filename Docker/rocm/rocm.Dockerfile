@@ -1,4 +1,4 @@
-ARG ROCM_IMAGE="dev-ubuntu-24.04:6.4"
+ARG ROCM_IMAGE="dev-ubuntu-24.04:7.2"
 FROM rocm/${ROCM_IMAGE}
 
 # Serveur exposé hors container
