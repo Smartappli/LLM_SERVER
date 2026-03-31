@@ -26,12 +26,10 @@ RUN pip install --upgrade --no-cache-dir pip wheel setuptools && \
       pydantic-settings starlette-context
 
 # Build llama-cpp-python avec backend SYCL (XPU Intel)
-# - Force oneAPI compilers for SYCL sources.
+# - Force oneAPI compilers for SYCL sources (required for -fsycl support).
 # - Disable native CPU tuning to keep builds reproducible across CI builders.
 # - Use a single build job to reduce peak memory usage during wheel compilation.
-ENV CC=icx
-ENV CXX=icpx
-ENV CMAKE_ARGS="-DGGML_SYCL=ON -DGGML_NATIVE=OFF"
+ENV CMAKE_ARGS="-DGGML_SYCL=ON -DGGML_NATIVE=OFF -DCMAKE_C_COMPILER=/opt/intel/oneapi/compiler/latest/bin/icx -DCMAKE_CXX_COMPILER=/opt/intel/oneapi/compiler/latest/bin/icpx"
 ENV CMAKE_BUILD_PARALLEL_LEVEL=1
 ENV GGML_SYCL=1
 RUN . /opt/intel/oneapi/setvars.sh && \
