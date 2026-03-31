@@ -226,3 +226,48 @@ pip install -r requirements.txt
 - `Docker/opencl/config-opencl.json`: OpenCL multi-model configuration
 - `tests/test_configs.py`: configuration unit tests
 - `Docker/main.py`: request smoke-test script
+
+
+## 10) Download medical Hugging Face models (GGUF / llama-cpp-python)
+
+A helper script is available to discover medical GGUF models from Hugging Face and optionally download them:
+
+```bash
+python Docker/download_medical_models.py --output-dir models
+```
+
+Download selected files (preferred quantization per model):
+
+```bash
+python Docker/download_medical_models.py --download --output-dir models
+```
+
+Download **all** GGUF files for each discovered medical model:
+
+```bash
+python Docker/download_medical_models.py --download --all-files --output-dir models
+```
+
+> You can pass a Hugging Face token with `--token <HF_TOKEN>` or the `HF_TOKEN` environment variable for gated/private models.
+
+
+## 11) Django 6 interface (no Bash required)
+
+A web interface is available to discover and download medical GGUF models from Hugging Face:
+
+```bash
+python -m pip install -r requirements.txt
+uv run --with-requirements requirements.txt granian --interface asgi --host 0.0.0.0 --port 8010 medical_ui.asgi:application --app-dir medical_ui
+```
+
+Open:
+
+- `http://localhost:8010/` (served by ASGI/granian)
+
+From the form you can:
+
+- set medical keywords;
+- choose search limit;
+- enable/disable downloads;
+- choose one preferred GGUF file or all files;
+- provide a Hugging Face token for gated repositories.
