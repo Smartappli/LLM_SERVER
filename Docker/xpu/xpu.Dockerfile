@@ -26,7 +26,7 @@ RUN pip install --upgrade --no-cache-dir pip wheel setuptools && \
       pydantic-settings starlette-context
 
 # Build llama-cpp-python avec backend SYCL (XPU Intel)
-ENV CMAKE_ARGS="-DGGML_SYCL=ON"
+ENV CMAKE_ARGS="-DGGML_SYCL=ON -DCMAKE_C_COMPILER=icx -DCMAKE_CXX_COMPILER=icpx"
 ENV GGML_SYCL=1
 RUN SETVARS_ARGS="--force" && export SETVARS_ARGS && \
     . /opt/intel/oneapi/setvars.sh && \
