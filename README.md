@@ -257,12 +257,12 @@ A web interface is available to discover and download medical GGUF models from H
 
 ```bash
 python -m pip install -r requirements.txt
-uv run --with-requirements requirements.txt uvicorn medical_ui.asgi:application --app-dir medical_ui --host 0.0.0.0 --port 8010
+uv run --with-requirements requirements.txt granian --interface asgi --host 0.0.0.0 --port 8010 medical_ui.asgi:application --app-dir medical_ui
 ```
 
 Open:
 
-- `http://localhost:8010/` (served by ASGI/uvicorn)
+- `http://localhost:8010/` (served by ASGI/granian)
 
 From the form you can:
 
