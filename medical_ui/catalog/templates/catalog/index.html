@@ -3,11 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <title>Medical GGUF Finder</title>
+  {% if job_status == "queued" or job_status == "running" %}
+    <meta http-equiv="refresh" content="2">
+  {% endif %}
   <style>
     body { font-family: Arial, sans-serif; margin: 2rem; }
     form { display: grid; gap: 0.75rem; max-width: 720px; }
     .result { margin-top: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; }
     .error { color: #a00; font-weight: bold; }
+    .status { margin-top: 1rem; font-weight: bold; }
     code { background: #f4f4f4; padding: 0.1rem 0.2rem; }
   </style>
 </head>
@@ -18,8 +22,12 @@
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Search / Download</button>
+    <button type="submit">Start job</button>
   </form>
+
+  {% if job_id %}
+    <p class="status">Job {{ job_id }} — status: {{ job_status }}</p>
+  {% endif %}
 
   {% if error %}
     <p class="error">Error: {{ error }}</p>
