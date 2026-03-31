@@ -49,8 +49,21 @@ jobs:
         env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
+      - name: Check SonarQube configuration
+        id: sonar_config
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+        run: |
+          if [ -n "$SONAR_TOKEN" ] && [ -n "$SONAR_PROJECT_KEY" ] && [ -n "$SONAR_ORGANIZATION" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: SonarQube scan
-        if: ${{ secrets.SONAR_TOKEN != '' && secrets.SONAR_PROJECT_KEY != '' && secrets.SONAR_ORGANIZATION != '' }}
+        if: ${{ steps.sonar_config.outputs.enabled == 'true' }}
         uses: SonarSource/sonarqube-scan-action@9598b8a83feef37de07f549027fab50ecffe6a6e
         with:
           args: >
@@ -61,6 +74,6 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL || 'https://sonarcloud.io' }}
 
       - name: SonarQube scan skipped
-        if: ${{ secrets.SONAR_TOKEN == '' || secrets.SONAR_PROJECT_KEY == '' || secrets.SONAR_ORGANIZATION == '' }}
+        if: ${{ steps.sonar_config.outputs.enabled != 'true' }}
         run: |
           echo "Skipping SonarQube scan because SONAR_TOKEN, SONAR_PROJECT_KEY, or SONAR_ORGANIZATION is not configured."

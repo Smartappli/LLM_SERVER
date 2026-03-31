@@ -26,7 +26,10 @@ RUN pip install --upgrade --no-cache-dir pip wheel setuptools && \
       pydantic-settings starlette-context
 
 # Build llama-cpp-python avec backend SYCL (XPU Intel)
-ENV CMAKE_ARGS="-DGGML_SYCL=ON"
+# - Disable native CPU tuning to keep builds reproducible across CI builders.
+# - Limit CMake parallelism to reduce peak memory usage during wheel compilation.
+ENV CMAKE_ARGS="-DGGML_SYCL=ON -DGGML_NATIVE=OFF"
+ENV CMAKE_BUILD_PARALLEL_LEVEL=2
 ENV GGML_SYCL=1
 RUN pip install --no-cache-dir --verbose "llama-cpp-python>=0.3.19,<0.4"
 
