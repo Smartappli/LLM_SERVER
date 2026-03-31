@@ -271,3 +271,23 @@ From the form you can:
 - enable/disable downloads;
 - choose one preferred GGUF file or all files;
 - provide a Hugging Face token for gated repositories.
+
+
+Security-oriented Django settings are environment-driven:
+
+```bash
+export DJANGO_ENV=prod
+export DJANGO_DEBUG=false
+export DJANGO_SECRET_KEY="replace-with-a-long-random-secret"
+export DJANGO_ALLOWED_HOSTS="your-domain.com,api.your-domain.com"
+```
+
+For local development, defaults remain developer-friendly (`DJANGO_ENV=dev`).
+
+
+UI safety notes:
+
+- CLI and Django both reuse shared business logic from `services/medical_models.py`;
+- downloads/discovery are processed in background jobs (non-blocking HTTP request cycle);
+- each job has a status (`queued`, `running`, `done`, `failed`) visible on the page;
+- `output_dir` is sanitized server-side and restricted under `<repo>/model_downloads`.
