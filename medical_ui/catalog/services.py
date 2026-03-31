@@ -36,8 +36,11 @@ def sanitize_output_dir(user_value: str) -> Path:
 
     resolved = (BASE_OUTPUT_ROOT / requested).resolve()
     base_resolved = BASE_OUTPUT_ROOT.resolve()
-    if not str(resolved).startswith(str(base_resolved)):
-        raise ValueError("output_dir must stay inside the allowed download directory")
+
+    try:
+        resolved.relative_to(base_resolved)
+    except ValueError as exc:
+        raise ValueError("output_dir must stay inside the allowed download directory") from exc
 
     return resolved
 
