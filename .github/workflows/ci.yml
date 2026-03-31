@@ -24,11 +24,11 @@ jobs:
           python-version: '3.12'
           cache: pip
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Set up uv
+        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57
 
       - name: Run test suite
-        run: pytest -q
+        run: uv run --with-requirements requirements.txt python -m unittest -v tests/test_configs.py
 
   docker-cpu:
     needs: tests

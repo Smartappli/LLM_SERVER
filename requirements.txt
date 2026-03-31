@@ -1,2 +1,5 @@
 coverage
 openai
+
+Django>=6.0a1,<7
+uvicorn>=0.35.0

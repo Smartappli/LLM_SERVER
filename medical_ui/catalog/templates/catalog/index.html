@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Medical GGUF Finder</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; }
+    form { display: grid; gap: 0.75rem; max-width: 720px; }
+    .result { margin-top: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; }
+    .error { color: #a00; font-weight: bold; }
+    code { background: #f4f4f4; padding: 0.1rem 0.2rem; }
+  </style>
+</head>
+<body>
+  <h1>Medical Hugging Face models (GGUF / llama-cpp-python)</h1>
+  <p>Use this interface to discover medical GGUF models and optionally download files without using shell scripts.</p>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Search / Download</button>
+  </form>
+
+  {% if error %}
+    <p class="error">Error: {{ error }}</p>
+  {% endif %}
+
+  {% if manifest %}
+    <div class="result">
+      <h2>Results ({{ manifest|length }})</h2>
+      <ul>
+        {% for model in manifest %}
+          <li>
+            <strong>{{ model.id }}</strong>
+            — downloads: {{ model.downloads }}, likes: {{ model.likes }}
+            <br />
+            files: <code>{{ model.selected_files|join:", " }}</code>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+</body>
+</html>
