@@ -28,7 +28,8 @@ RUN pip install --upgrade --no-cache-dir pip wheel setuptools && \
 # Build llama-cpp-python avec backend SYCL (XPU Intel)
 ENV CMAKE_ARGS="-DGGML_SYCL=ON"
 ENV GGML_SYCL=1
-RUN pip install --no-cache-dir --verbose "llama-cpp-python>=0.3.19,<0.4"
+RUN SETVARS_ARGS="--force" . /opt/intel/oneapi/setvars.sh && \
+    pip install --no-cache-dir --verbose "llama-cpp-python>=0.3.19,<0.4"
 
 EXPOSE 8008
 CMD ["python3", "-m", "llama_cpp.server", "--config_file", "config-xpu.json"]
