@@ -287,6 +287,7 @@ For local development, defaults remain developer-friendly (`DJANGO_ENV=dev`).
 
 UI safety notes:
 
+- CLI and Django both reuse shared business logic from `services/medical_models.py`;
 - downloads/discovery are processed in background jobs (non-blocking HTTP request cycle);
 - each job has a status (`queued`, `running`, `done`, `failed`) visible on the page;
 - `output_dir` is sanitized server-side and restricted under `<repo>/model_downloads`.
