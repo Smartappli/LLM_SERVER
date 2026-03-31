@@ -13,4 +13,4 @@ class ModelDiscoveryForm(forms.Form):
     )
     download = forms.BooleanField(required=False, initial=False)
     all_files = forms.BooleanField(required=False, initial=False)
-    token = forms.CharField(required=False, widget=forms.PasswordInput(render_value=True))
+    token = forms.CharField(required=False, widget=forms.PasswordInput(render_value=False))
