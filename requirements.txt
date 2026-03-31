@@ -1,2 +1,4 @@
 coverage
 openai
+
+Django>=6.0a1,<7

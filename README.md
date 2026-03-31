@@ -249,3 +249,25 @@ python Docker/download_medical_models.py --download --all-files --output-dir mod
 ```
 
 > You can pass a Hugging Face token with `--token <HF_TOKEN>` or the `HF_TOKEN` environment variable for gated/private models.
+
+
+## 11) Django 6 interface (no Bash required)
+
+A web interface is available to discover and download medical GGUF models from Hugging Face:
+
+```bash
+python -m pip install -r requirements.txt
+python medical_ui/manage.py runserver 0.0.0.0:8010
+```
+
+Open:
+
+- `http://localhost:8010/`
+
+From the form you can:
+
+- set medical keywords;
+- choose search limit;
+- enable/disable downloads;
+- choose one preferred GGUF file or all files;
+- provide a Hugging Face token for gated repositories.
