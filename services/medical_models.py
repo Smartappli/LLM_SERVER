@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import secrets
 import socket
-import tempfile
 import time
 from pathlib import Path
 from typing import Any, Iterable
@@ -29,7 +29,7 @@ def _validate_allowed_url(url: str) -> None:
 
 def _safe_urlopen(request: Request, timeout: int):
     _validate_allowed_url(request.full_url)
-    return urlopen(request, timeout=timeout)
+    return urlopen(request, timeout=timeout)  # nosec B310 - scheme/host validated by _validate_allowed_url
 
 
 def _request_json(url: str, token: str | None = None, timeout: int = DEFAULT_TIMEOUT_SECONDS) -> list[dict] | dict:
@@ -171,8 +171,8 @@ def download_file(
 
                 hasher = hashlib.sha256()
                 total_bytes = 0
-                with tempfile.NamedTemporaryFile(delete=False, dir=model_dir, suffix=".part") as tmp_file:
-                    temp_path = Path(tmp_file.name)
+                temp_path = model_dir / f".{destination.name}.{secrets.token_hex(8)}.part"
+                with temp_path.open("xb") as tmp_file:
                     while True:
                         chunk = response.read(1024 * 1024)
                         if not chunk:
