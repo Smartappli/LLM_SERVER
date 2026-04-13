@@ -25,7 +25,9 @@ DEBUG = _env_bool("DJANGO_DEBUG", ENV != "prod")
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 if not SECRET_KEY:
     if DEBUG:
-        SECRET_KEY = "django-insecure-dev-only-key"
+        from django.core.management.utils import get_random_secret_key
+
+        SECRET_KEY = get_random_secret_key()
     else:
         raise RuntimeError("DJANGO_SECRET_KEY must be set when DEBUG=False")
 

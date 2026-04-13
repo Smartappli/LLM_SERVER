@@ -8,7 +8,7 @@ import time
 from pathlib import Path
 from typing import Any, Iterable
 from urllib.error import HTTPError, URLError
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 from urllib.request import Request, urlopen
 
 HF_API_BASE = "https://huggingface.co/api/models"
@@ -19,13 +19,26 @@ DEFAULT_TIMEOUT_SECONDS = 30
 DEFAULT_RETRIES = 3
 
 
+def _validate_allowed_url(url: str) -> None:
+    parsed = urlparse(url)
+    if parsed.scheme != "https":
+        raise ValueError(f"Unsupported URL scheme: {parsed.scheme}")
+    if parsed.hostname not in {"huggingface.co", "www.huggingface.co"}:
+        raise ValueError(f"Unsupported URL host: {parsed.hostname}")
+
+
+def _safe_urlopen(request: Request, timeout: int):
+    _validate_allowed_url(request.full_url)
+    return urlopen(request, timeout=timeout)
+
+
 def _request_json(url: str, token: str | None = None, timeout: int = DEFAULT_TIMEOUT_SECONDS) -> list[dict] | dict:
     headers = {"User-Agent": "llm-server-medical-model-fetcher/1.0"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
 
     request = Request(url, headers=headers)
-    with urlopen(request, timeout=timeout) as response:  # noqa: S310 - controlled URL constant
+    with _safe_urlopen(request, timeout=timeout) as response:
         payload = response.read().decode("utf-8")
     return json.loads(payload)
 
@@ -153,7 +166,7 @@ def download_file(
         temp_path = None
         try:
             request = _build_request(file_url, token)
-            with urlopen(request, timeout=timeout) as response:  # noqa: S310 - controlled URL constant
+            with _safe_urlopen(request, timeout=timeout) as response:
                 expected_size = response.headers.get("Content-Length")
 
                 hasher = hashlib.sha256()
