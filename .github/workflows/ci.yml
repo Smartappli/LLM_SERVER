@@ -8,7 +8,6 @@ on:
 
 permissions:
   contents: read
-  packages: write
 
 concurrency:
   group: ci-${{ github.event_name == 'pull_request' && format('{0}-{1}', github.workflow, github.event.pull_request.number) || github.workflow_ref }}
@@ -18,6 +17,8 @@ concurrency:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -37,6 +38,9 @@ jobs:
   docker-cpu:
     needs: tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
@@ -86,6 +90,8 @@ jobs:
   docker-xpu:
     needs: tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
@@ -122,6 +128,8 @@ jobs:
   docker-rocm:
     needs: tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
@@ -158,6 +166,8 @@ jobs:
   docker-vulkan:
     needs: tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
@@ -194,6 +204,8 @@ jobs:
   docker-opencl:
     needs: tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
@@ -229,6 +241,8 @@ jobs:
   docker-cuda:
     needs: tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
