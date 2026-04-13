@@ -1,5 +1,6 @@
 import os
 import sys
+from pathlib import Path
 import unittest
 
 try:
@@ -36,7 +37,7 @@ class TestMedicalUi(unittest.TestCase):
         from catalog.services import sanitize_output_dir
 
         with self.assertRaises(ValueError):
-            sanitize_output_dir("/tmp/forbidden")
+            sanitize_output_dir(str(Path.home()))
 
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ from catalog.services import BASE_OUTPUT_ROOT, sanitize_output_dir
 class TestSanitizeOutputDir(unittest.TestCase):
     def test_rejects_absolute_path(self):
         with self.assertRaises(ValueError):
-            sanitize_output_dir("/tmp/outside")
+            sanitize_output_dir(str(Path.home()))
 
     def test_rejects_parent_escape(self):
         with self.assertRaises(ValueError):
