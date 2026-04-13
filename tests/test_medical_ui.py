@@ -28,7 +28,6 @@ class TestMedicalUi(unittest.TestCase):
                 "output_dir": "models",
                 "download": False,
                 "all_files": False,
-                "token": "",
             }
         )
         self.assertTrue(form.is_valid())
