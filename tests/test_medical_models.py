@@ -21,6 +21,26 @@ class TestMedicalModelsService(unittest.TestCase):
         files = ["model.Q8_0.gguf", "model.Q4_K_M.gguf"]
         self.assertEqual(medical_models.pick_preferred_file(files), ["model.Q4_K_M.gguf"])
 
+    def test_download_file_rejects_model_id_path_traversal(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            with self.assertRaises(ValueError):
+                medical_models.download_file(
+                    model_id="../escape",
+                    file_name="model.gguf",
+                    output_dir=Path(tmpdir),
+                    token=None,
+                )
+
+    def test_download_file_rejects_file_name_path_traversal(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            with self.assertRaises(ValueError):
+                medical_models.download_file(
+                    model_id="org/model",
+                    file_name="../escape.gguf",
+                    output_dir=Path(tmpdir),
+                    token=None,
+                )
+
     @mock.patch("services.medical_models.discover_models")
     @mock.patch("services.medical_models.download_file")
     def test_generate_manifest_with_download(self, download_mock, discover_mock):

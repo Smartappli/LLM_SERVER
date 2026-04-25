@@ -27,6 +27,22 @@ def _validate_allowed_url(url: str) -> None:
         raise ValueError(f"Unsupported URL host: {parsed.hostname}")
 
 
+def _safe_child_path(base_dir: Path, child: str, *, label: str) -> Path:
+    """
+    Build a child path constrained to ``base_dir`` to prevent traversal.
+    """
+    if not child or child.strip() == "":
+        raise ValueError(f"{label} cannot be empty")
+
+    candidate = (base_dir / child).resolve()
+    base_resolved = base_dir.resolve()
+    try:
+        candidate.relative_to(base_resolved)
+    except ValueError as exc:
+        raise ValueError(f"Unsafe {label}: path traversal is not allowed") from exc
+    return candidate
+
+
 def _safe_urlopen(request: Request, timeout: int):
     _validate_allowed_url(request.full_url)
     return urlopen(request, timeout=timeout)  # nosec B310 - scheme/host validated by _validate_allowed_url
@@ -153,9 +169,9 @@ def download_file(
     timeout: int = DEFAULT_TIMEOUT_SECONDS,
     retries: int = DEFAULT_RETRIES,
 ) -> Path:
-    model_dir = output_dir / model_id
+    model_dir = _safe_child_path(output_dir, model_id, label="model_id")
     model_dir.mkdir(parents=True, exist_ok=True)
-    destination = model_dir / file_name
+    destination = _safe_child_path(model_dir, file_name, label="file_name")
 
     if destination.exists():
         return destination
