@@ -54,7 +54,7 @@ jobs:
 
       - name: SonarQube scan
         if: ${{ secrets.SONAR_TOKEN != '' && secrets.SONAR_PROJECT_KEY != '' && secrets.SONAR_ORGANIZATION != '' }}
-        uses: SonarSource/sonarqube-scan-action@55e44800a8f495208cce6e4e82f5dedb45fcf0ef
+        uses: SonarSource/sonarqube-scan-action@59db25f34e16620e48ab4bb9e4a5dce155cb5432
         with:
           args: >
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
