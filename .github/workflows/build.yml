@@ -32,7 +32,7 @@ jobs:
           cache: pip
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@ed07c7622496a021a7c05439fd0c5f19a610125b
+        uses: astral-sh/setup-uv@12d13f90bc3a5a1971bebad4beb09a4dfa962e91
 
       - name: Generate coverage report
         run: |
