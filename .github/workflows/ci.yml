@@ -30,7 +30,7 @@ jobs:
           cache: pip
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@12d13f90bc3a5a1971bebad4beb09a4dfa962e91
+        uses: astral-sh/setup-uv@e7108c6ccc54129b17d33a811fb575459b771453
 
       - name: Run test suite
         run: uv run --with-requirements requirements.txt python -m unittest discover -s tests -p 'test_*.py'
