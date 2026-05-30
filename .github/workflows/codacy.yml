@@ -54,8 +54,12 @@ jobs:
           # This will handover control about PR rejection to the GitHub side
           max-allowed-issues: 2147483647
 
-      # Upload the SARIF file generated in the previous step
+      # Split Codacy's multi-run SARIF output so every upload has a unique category.
+      - name: Split SARIF runs
+        run: python .github/scripts/split_sarif_runs.py results.sarif sarif-results --category-prefix codacy
+
+      # Upload the SARIF files generated in the previous step.
       - name: Upload SARIF results file
         uses: github/codeql-action/upload-sarif@v4
         with:
-          sarif_file: results.sarif
+          sarif_file: sarif-results
