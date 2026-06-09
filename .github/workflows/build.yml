@@ -32,7 +32,7 @@ jobs:
           cache: pip
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@8e642c5e623b521f8b6b15bbc2ba54bae583fe45
+        uses: astral-sh/setup-uv@ed73b5df24d31a50feea1e4d7296df2b5840941d
 
       - name: Generate coverage report
         run: |
@@ -54,7 +54,7 @@ jobs:
 
       - name: SonarQube scan
         if: ${{ secrets.SONAR_TOKEN != '' && secrets.SONAR_PROJECT_KEY != '' && secrets.SONAR_ORGANIZATION != '' }}
-        uses: SonarSource/sonarqube-scan-action@7006c4492b2e0ee0f816d36501671557c97f5995
+        uses: SonarSource/sonarqube-scan-action@713881670b6b3676cda39549040e2d88c70d582e
         with:
           args: >
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
