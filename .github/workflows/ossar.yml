@@ -32,7 +32,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     # Ensure a compatible version of .NET is installed for OSSAR/MSDO.
     - name: Install .NET
