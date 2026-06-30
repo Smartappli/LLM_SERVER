@@ -2,4 +2,4 @@ coverage
 openai
 
 Django>=6.0.6,<7.0
-granian==2.7.7
+granian==2.7.8
