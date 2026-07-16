@@ -36,7 +36,7 @@ jobs:
 
     # Ensure a compatible version of .NET is installed for OSSAR/MSDO.
     - name: Install .NET
-      uses: actions/setup-dotnet@v5
+      uses: actions/setup-dotnet@v6
       with:
         dotnet-version: '6.0.x'
 
